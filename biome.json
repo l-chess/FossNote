@@ -6,14 +6,21 @@
     "useIgnoreFile": true
   },
   "files": {
-    "ignoreUnknown": false,
-    "ignore": ["dist", "out", "node_modules"]
+    "ignoreUnknown": false
+  },
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
   },
   "formatter": {
     "enabled": true,
     "indentStyle": "space",
     "indentWidth": 2,
-    "lineWidth": 100
+    "lineWidth": 100,
+    "includes": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", "**/*.json"]
   },
   "linter": {
     "enabled": true,
@@ -30,8 +37,5 @@
       "semicolons": "always",
       "trailingCommas": "all"
     }
-  },
-  "organizeImports": {
-    "enabled": true
   }
 }
