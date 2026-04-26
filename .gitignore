@@ -1,0 +1,36 @@
+# Dependencies
+node_modules
+
+# Build outputs
+dist
+out
+
+# OS
+.DS_Store
+.Thumbs.db
+
+# Logs
+*.log*
+
+# Editor
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+
+# Biome
+.biome-cache
+
+# ESLint (no longer used but just in case)
+.eslintcache
+
+# FossNote — local data
+*.db
+*.db-shm
+*.db-wal
+user-data/
+
+# Environment
+.env.local
+.env.*.local
+*storybook.log
+storybook-static
