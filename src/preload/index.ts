@@ -1,12 +1,19 @@
-import { contextBridge } from "electron";
 import { electronAPI } from "@electron-toolkit/preload";
+import { contextBridge, ipcRenderer } from "electron";
 
-// Custom APIs for renderer
-const api = {};
+const api = {
+  vault: {
+    open: () => ipcRenderer.invoke("vault:open"),
+    list: (vaultPath: string) => ipcRenderer.invoke("vault:list", vaultPath),
+  },
+  page: {
+    read: (vaultPath: string, pageName: string) =>
+      ipcRenderer.invoke("page:read", vaultPath, pageName),
+    write: (vaultPath: string, pageName: string, content: string) =>
+      ipcRenderer.invoke("page:write", vaultPath, pageName, content),
+  },
+};
 
-// Use `contextBridge` APIs to expose Electron APIs to
-// renderer only if context isolation is enabled, otherwise
-// just add to the DOM global.
 if (process.contextIsolated) {
   try {
     contextBridge.exposeInMainWorld("electron", electronAPI);
@@ -15,8 +22,8 @@ if (process.contextIsolated) {
     console.error(error);
   }
 } else {
-  // @ts-ignore (define in dts)
+  // @ts-expect-error (define in dts)
   window.electron = electronAPI;
-  // @ts-ignore (define in dts)
+  // @ts-expect-error (define in dts)
   window.api = api;
 }

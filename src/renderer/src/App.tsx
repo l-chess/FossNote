@@ -18,6 +18,9 @@ function App(): React.JSX.Element {
         ) : (
           <div className="flex items-center justify-center h-full text-gray-400 text-sm">
             Select a page to start editing
+            <button type="button" onClick={window.api.vault.open}>
+              Pick Folder
+            </button>
           </div>
         )}
       </main>
