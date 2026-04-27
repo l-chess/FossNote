@@ -5,6 +5,13 @@ const meta = {
   title: "Sidebar",
   component: Sidebar,
   tags: ["autodocs"],
+  decorators: [
+    (Story) => (
+      <div className="w-screen">
+        <Story />
+      </div>
+    ),
+  ],
 } satisfies Meta<typeof Sidebar>;
 
 export default meta;

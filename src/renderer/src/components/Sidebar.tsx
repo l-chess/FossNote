@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { TbLayoutSidebarLeftCollapseFilled, TbLayoutSidebarLeftExpand } from "react-icons/tb";
+import { Button } from "./Button";
 
 export type SidebarProps = {
   files: string[];
@@ -7,53 +9,33 @@ export type SidebarProps = {
 };
 
 export const Sidebar = ({ files, activePage, onPageSelect }: SidebarProps) => {
-  const [collapseSidebar, setCollapseSidebar] = useState<boolean>(false);
+  const [collapsed, setCollapsed] = useState<boolean>(false);
   const handleCollapse = () => {
-    setCollapseSidebar(!collapseSidebar);
+    setCollapsed(!collapsed);
   };
 
-  if (collapseSidebar) {
-    return (
-      <div>
-        <button
+  return (
+    <div className="flex">
+      <div className="border-r border-gray-300 h-screen left-0 p-1">
+        <Button
+          label={collapsed ? <TbLayoutSidebarLeftExpand /> : <TbLayoutSidebarLeftCollapseFilled />}
+          className="text-xl text-gray-500"
           onClick={handleCollapse}
-          type="button"
-          className="text-xs text-gray-400 hover:text-gray-600 text-left px-2"
-        >
-          show Sidebar
-        </button>
+        />
       </div>
-    );
-  } else {
-    return (
-      <div className="relative border-r border-gray-200 p-3 h-screen w-48 flex flex-col shrink-0">
-        <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider px-2 mb-2">
-          Pages
-        </span>
-        <div className="flex-1 flex flex-col gap-0.5">
+      {!collapsed && (
+        <div className="flex-col flex px-2 border-r border-gray-300 w-48 gap-1">
+          <span className="font-semibold uppercase text-sm text-gray-500">Pages</span>
           {files.map((file) => (
-            <button
-              type="button"
+            <Button
               key={file}
+              label={file}
               onClick={() => onPageSelect(file)}
-              className={`text-left text-sm py-1 px-2 rounded-md w-full transition-colors ${
-                activePage === file
-                  ? "bg-gray-200 text-gray-900 font-medium"
-                  : "text-gray-600 hover:bg-gray-100"
-              }`}
-            >
-              {file}
-            </button>
+              className={`text-left ${activePage === file && "bg-gray-200 hover:bg-gray-300"}`}
+            />
           ))}
         </div>
-        <button
-          onClick={handleCollapse}
-          type="button"
-          className="text-xs text-gray-400 hover:text-gray-600 text-left px-2"
-        >
-          ← Collapse
-        </button>
-      </div>
-    );
-  }
+      )}
+    </div>
+  );
 };

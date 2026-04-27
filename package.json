@@ -39,13 +39,12 @@
     "@tiptap/starter-kit": "^3.22.4",
     "better-sqlite3": "^12.9.0",
     "electron-updater": "^6.3.9",
+    "react-icons": "^5.6.0",
     "tailwindcss": "^4.2.4",
     "zustand": "^5.0.12"
   },
   "devDependencies": {
     "@biomejs/biome": "2.4.13",
-    "@electron-toolkit/eslint-config-prettier": "^3.0.0",
-    "@electron-toolkit/eslint-config-ts": "^3.1.0",
     "@electron-toolkit/tsconfig": "^2.0.0",
     "@storybook/react-vite": "^10.3.5",
     "@types/better-sqlite3": "^7.6.13",
@@ -55,8 +54,6 @@
     "@vitejs/plugin-react": "^5.1.1",
     "electron-builder": "^26.0.12",
     "electron-vite": "^5.0.0",
-    "eslint-plugin-react-refresh": "^0.4.24",
-    "eslint-plugin-storybook": "^10.3.5",
     "react": "^19.2.1",
     "react-dom": "^19.2.1",
     "storybook": "^10.3.5",
