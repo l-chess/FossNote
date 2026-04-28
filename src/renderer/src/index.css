@@ -1,6 +1,19 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
 
+* {
+  scrollbar-width: none;
+}
+
+*:hover {
+  scrollbar-width: thin;
+  scrollbar-color: #d1d5db transparent;
+}
+
+.dark *:hover {
+  scrollbar-color: #4b5563 transparent;
+}
+
 .tiptap p.is-editor-empty:first-child::before {
   content: attr(data-placeholder);
   float: left;
