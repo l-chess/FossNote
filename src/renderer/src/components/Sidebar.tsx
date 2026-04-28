@@ -2,6 +2,7 @@ import { useState } from "react";
 import { FaFolderMinus } from "react-icons/fa6";
 import { TbLayoutSidebarLeftCollapseFilled, TbLayoutSidebarLeftExpand } from "react-icons/tb";
 import { Button } from "./Button";
+import { ThemeToggle } from "./ThemeToggle";
 
 export type SidebarProps = {
   files: string[];
@@ -14,12 +15,13 @@ export const Sidebar = ({ files, activePage, onPageSelect }: SidebarProps) => {
 
   return (
     <div className="flex h-screen shrink-0">
-      <div className="border-r border-gray-300 left-0 p-1 flex flex-col items-center text-gray-500">
+      <div className="border-r border-gray-500 left-0 p-1 flex flex-col items-center text-gray-500">
         <Button
           label={collapsed ? <TbLayoutSidebarLeftExpand /> : <TbLayoutSidebarLeftCollapseFilled />}
           className="text-2xl"
           onClick={() => setCollapsed(!collapsed)}
         />
+        <ThemeToggle />
         <Button
           label={<FaFolderMinus />}
           onClick={window.api.vault.open}
@@ -28,7 +30,7 @@ export const Sidebar = ({ files, activePage, onPageSelect }: SidebarProps) => {
       </div>
 
       <div
-        className={`flex flex-col overflow-hidden transition-all duration-300 ease-in-out border-r border-gray-300 ${collapsed ? "w-0" : "w-52"}`}
+        className={`flex flex-col overflow-hidden transition-all duration-300 ease-in-out border-r border-gray-500 ${collapsed ? "w-0" : "w-52"}`}
       >
         <div className="flex-col flex px-2 gap-1 min-w-52">
           <span className="font-semibold uppercase text-sm text-gray-500 mt-3">Pages</span>
@@ -37,7 +39,8 @@ export const Sidebar = ({ files, activePage, onPageSelect }: SidebarProps) => {
               key={file}
               label={file}
               onClick={() => onPageSelect(file)}
-              className={`text-left ${activePage === file && "bg-gray-200 hover:bg-gray-300"}`}
+              className={`text-left ${activePage === file && "bg-gray-200 dark:bg-gray-700"}`}
+              hover={activePage === file ? "hover:bg-gray-300 dark:hover:bg-gray-600" : ""}
             />
           ))}
         </div>

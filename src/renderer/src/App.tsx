@@ -6,7 +6,7 @@ function App(): React.JSX.Element {
   const [activePage, setActivePage] = useState<string | null>(null);
 
   return (
-    <div className="flex h-screen w-screen bg-white text-gray-900 overflow-hidden">
+    <div className="flex h-screen w-screen bg-white text-black dark:bg-gray-900 dark:text-white overflow-hidden">
       <Sidebar
         files={["Page 1", "Page 2", "Page 3"]}
         activePage={activePage}
