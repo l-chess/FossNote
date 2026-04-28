@@ -19,8 +19,8 @@ export const Editor = () => {
   });
 
   return (
-    <div className="max-w-2xl mx-auto px-12 py-16 h-full">
-      <EditorContent editor={editor} className="h-full text-gray-900 text-base leading-7" />
+    <div className="max-w-screen mx-auto px-12 py-16 h-full">
+      <EditorContent editor={editor} className="h-full text-base leading-7" />
     </div>
   );
 };
