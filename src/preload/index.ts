@@ -11,6 +11,8 @@ const api = {
       ipcRenderer.invoke("page:read", vaultPath, pageName),
     write: (vaultPath: string, pageName: string, content: string) =>
       ipcRenderer.invoke("page:write", vaultPath, pageName, content),
+    rename: (vaultPath: string, oldName: string, newName: string) =>
+      ipcRenderer.invoke("page:rename", vaultPath, oldName, newName),
   },
 };
 

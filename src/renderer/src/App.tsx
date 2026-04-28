@@ -16,8 +16,13 @@ function App(): React.JSX.Element {
     setActivePage(null);
   };
 
+  const handleRename = (oldName: string, newName: string) => {
+    setFiles((prev) => prev.map((f) => (f === oldName ? newName : f)));
+    setActivePage(newName);
+  };
+
   return (
-    <div className="flex h-screen w-screen bg-white text-black dark:bg-gray-900 dark:text-white overflow-hidden">
+    <div className="flex h-screen w-screen bg-bg text-primary dark:bg-bg-dark dark:text-primary-dark overflow-hidden">
       <Sidebar
         files={files}
         activePage={activePage}
@@ -26,9 +31,9 @@ function App(): React.JSX.Element {
       />
       <main className="flex-1 overflow-y-auto">
         {activePage && vaultPath ? (
-          <Editor vaultPath={vaultPath} pageName={activePage} />
+          <Editor vaultPath={vaultPath} pageName={activePage} onRename={handleRename} />
         ) : (
-          <div className="flex flex-col items-center justify-center h-full text-gray-400 text-sm">
+          <div className="flex flex-col items-center justify-center h-full text-secondary text-sm">
             Select a page to start editing
           </div>
         )}

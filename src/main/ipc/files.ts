@@ -1,4 +1,4 @@
-import { readdir, readFile, writeFile } from "node:fs/promises";
+import { readdir, readFile, rename, writeFile } from "node:fs/promises";
 import { join, relative } from "node:path";
 import { dialog, ipcMain } from "electron";
 
@@ -43,5 +43,12 @@ export function registerFileHandlers(): void {
   ipcMain.handle("page:write", async (_, vaultPath: string, pageName: string, content: string) => {
     const filePath = join(vaultPath, `${pageName}.md`);
     await writeFile(filePath, content, "utf-8");
+  });
+
+  ipcMain.handle("page:rename", async (_, vaultPath: string, oldName: string, newName: string) => {
+    const oldPath = join(vaultPath, `${oldName}.md`);
+    const newPath = join(vaultPath, `${newName}.md`);
+    await rename(oldPath, newPath);
+    return newName;
   });
 }

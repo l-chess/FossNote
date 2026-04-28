@@ -6,6 +6,7 @@ export interface IApi {
   page: {
     read: (vaultPath: string, pageName: string) => Promise<string>;
     write: (vaultPath: string, pageName: string, content: string) => Promise<void>;
+    rename: (vaultPath: string, oldName: string, newName: string) => Promise<string>;
   };
 }
 

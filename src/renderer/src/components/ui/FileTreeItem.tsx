@@ -21,7 +21,7 @@ export const FileTreeItem = ({ node, activePage, onPageSelect, depth }: FileTree
         label={node.name}
         onClick={() => onPageSelect(node.path)}
         style={{ paddingLeft: `${depth * 12 + 8}px` }}
-        className={`text-left ${isActive ? "bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600" : "hover:bg-gray-200 dark:hover:bg-gray-700"}`}
+        className={`text-left mt-1 ${isActive ? "bg-hover dark:bg-hover-dark hover:bg-xhover dark:hover:bg-xhover-dark" : "hover:bg-hover dark:hover:bg-hover-dark"}`}
       />
     );
   }

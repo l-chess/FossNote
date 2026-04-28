@@ -13,7 +13,7 @@ export const IconButton = ({ label, ariaLabel, onClick, className }: IconButtonP
       type="button"
       onClick={onClick}
       aria-label={ariaLabel}
-      className={`flex cursor-pointer rounded-md aspect-square w-10 hover:bg-gray-200 dark:hover:bg-gray-700 justify-center items-center ${className}`}
+      className={`flex cursor-pointer rounded-md aspect-square w-10 hover:bg-hover dark:hover:bg-hover-dark justify-center items-center ${className}`}
     >
       {label}
     </button>
