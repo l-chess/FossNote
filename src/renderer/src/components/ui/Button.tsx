@@ -1,7 +1,5 @@
-import type { ReactNode } from "react";
-
 export type ButtonProps = {
-  label: string | ReactNode;
+  label: string;
   onClick?: () => void;
   className?: string;
   hover?: string;

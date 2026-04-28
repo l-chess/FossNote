@@ -1,6 +1,22 @@
 import { readdir, readFile, writeFile } from "node:fs/promises";
-import { join } from "node:path";
+import { join, relative } from "node:path";
 import { dialog, ipcMain } from "electron";
+
+async function listMarkdownFiles(dir: string, rootDir: string): Promise<string[]> {
+  const entries = await readdir(dir, { withFileTypes: true });
+  const results: string[] = [];
+
+  for (const entry of entries) {
+    const fullPath = join(dir, entry.name);
+    if (entry.isDirectory()) {
+      const nested = await listMarkdownFiles(fullPath, rootDir);
+      results.push(...nested);
+    } else if (entry.isFile() && entry.name.endsWith(".md")) {
+      results.push(relative(rootDir, fullPath).replace(/\.md$/, ""));
+    }
+  }
+  return results;
+}
 
 export function registerFileHandlers(): void {
   // Open a folder picker and return the chosen path
@@ -14,10 +30,7 @@ export function registerFileHandlers(): void {
 
   // List all .md files in a vault folder
   ipcMain.handle("vault:list", async (_, vaultPath: string) => {
-    const entries = await readdir(vaultPath, { withFileTypes: true });
-    return entries
-      .filter((e) => e.isFile() && e.name.endsWith(".md"))
-      .map((e) => e.name.replace(/\.md$/, ""));
+    return await listMarkdownFiles(vaultPath, vaultPath);
   });
 
   // Read a single page's content
