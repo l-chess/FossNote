@@ -2,20 +2,24 @@ import Placeholder from "@tiptap/extension-placeholder";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { useEffect, useRef } from "react";
+import { Markdown } from "tiptap-markdown";
 
 export type EditorProps = {
   vaultPath: string;
   pageName: string;
   onRename: (oldName: string, newName: string) => void;
+  focusTitle?: boolean;
 };
 
-export const Editor = ({ vaultPath, pageName, onRename }: EditorProps) => {
+export const Editor = ({ vaultPath, pageName, onRename, focusTitle = false }: EditorProps) => {
   const displayName = pageName.split("/").pop() ?? pageName;
   const titleRef = useRef<HTMLHeadingElement>(null);
+  const editorRef = useRef<ReturnType<typeof useEditor>>(null);
 
   const editor = useEditor({
     extensions: [
       StarterKit,
+      Markdown,
       Placeholder.configure({
         placeholder: "Start writing…",
       }),
@@ -25,9 +29,18 @@ export const Editor = ({ vaultPath, pageName, onRename }: EditorProps) => {
       attributes: {
         class: "outline-none min-h-full",
       },
+      handleKeyDown: (_, event) => {
+        if (event.key === "Tab") {
+          event.preventDefault();
+          editor?.commands.insertContent("\t");
+          return true;
+        }
+        return false;
+      },
     },
     onUpdate: ({ editor }) => {
-      window.api.page.write(vaultPath, pageName, editor.getText());
+      const markdown = (editor.storage as any).markdown.getMarkdown();
+      window.api.page.write(vaultPath, pageName, markdown);
     },
   });
 
@@ -44,6 +57,21 @@ export const Editor = ({ vaultPath, pageName, onRename }: EditorProps) => {
       titleRef.current.textContent = displayName;
     }
   }, [displayName]);
+
+  useEffect(() => {
+    editorRef.current = editor;
+  }, [editor]);
+
+  useEffect(() => {
+    if (focusTitle && titleRef.current) {
+      titleRef.current.focus();
+      const range = document.createRange();
+      range.selectNodeContents(titleRef.current);
+      const selection = window.getSelection();
+      selection?.removeAllRanges();
+      selection?.addRange(range);
+    }
+  }, [focusTitle]);
 
   const handleTitleBlur = async () => {
     const newDisplayName = titleRef.current?.textContent?.trim();

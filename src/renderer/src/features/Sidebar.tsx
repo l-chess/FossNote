@@ -12,9 +12,16 @@ export type SidebarProps = {
   activePage: string | null;
   onPageSelect: (page: string) => void;
   onOpenVault: () => void;
+  onCreatePage: () => void;
 };
 
-export const Sidebar = ({ files, activePage, onPageSelect, onOpenVault }: SidebarProps) => {
+export const Sidebar = ({
+  files,
+  activePage,
+  onPageSelect,
+  onOpenVault,
+  onCreatePage,
+}: SidebarProps) => {
   const [collapsed, setCollapsed] = useState<boolean>(false);
   const tree = useMemo(() => buildTree(files), [files]);
 
@@ -49,6 +56,7 @@ export const Sidebar = ({ files, activePage, onPageSelect, onOpenVault }: Sideba
             label="New Page"
             icon={<FaPlus />}
             className="hover:bg-hover dark:hover:bg-hover-dark text-secondary gap-2"
+            onClick={onCreatePage}
           />
           <FileTree nodes={tree} activePage={activePage} onPageSelect={onPageSelect} />
         </div>

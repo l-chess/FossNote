@@ -6,6 +6,7 @@ function App(): React.JSX.Element {
   const [vaultPath, setVaultPath] = useState<string | null>(null);
   const [files, setFiles] = useState<string[]>([]);
   const [activePage, setActivePage] = useState<string | null>(null);
+  const [focusTitle, setFocusTitle] = useState(false);
 
   const handleOpenVault = async () => {
     const path = await window.api.vault.open();
@@ -19,6 +20,16 @@ function App(): React.JSX.Element {
   const handleRename = (oldName: string, newName: string) => {
     setFiles((prev) => prev.map((f) => (f === oldName ? newName : f)));
     setActivePage(newName);
+    setFocusTitle(false);
+  };
+
+  const handleCreatePage = async () => {
+    if (!vaultPath) return;
+    await window.api.page.create(vaultPath, "Untitled");
+    const pages = await window.api.vault.list(vaultPath);
+    setFiles(pages);
+    setActivePage("Untitled");
+    setFocusTitle(true);
   };
 
   return (
@@ -28,10 +39,16 @@ function App(): React.JSX.Element {
         activePage={activePage}
         onPageSelect={setActivePage}
         onOpenVault={handleOpenVault}
+        onCreatePage={handleCreatePage}
       />
       <main className="flex-1 overflow-y-auto">
         {activePage && vaultPath ? (
-          <Editor vaultPath={vaultPath} pageName={activePage} onRename={handleRename} />
+          <Editor
+            vaultPath={vaultPath}
+            pageName={activePage}
+            onRename={handleRename}
+            focusTitle={focusTitle}
+          />
         ) : (
           <div className="flex flex-col items-center justify-center h-full text-secondary text-sm">
             Select a page to start editing

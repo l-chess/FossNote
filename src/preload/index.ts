@@ -13,6 +13,12 @@ const api = {
       ipcRenderer.invoke("page:write", vaultPath, pageName, content),
     rename: (vaultPath: string, oldName: string, newName: string) =>
       ipcRenderer.invoke("page:rename", vaultPath, oldName, newName),
+    create: (vaultPath: string, pageName: string) =>
+      ipcRenderer.invoke("page:create", vaultPath, pageName),
+  },
+  folder: {
+    create: (vaultPath: string, folderName: string) =>
+      ipcRenderer.invoke("folder:create", vaultPath, folderName),
   },
 };
 
