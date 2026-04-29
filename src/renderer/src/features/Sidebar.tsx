@@ -64,6 +64,7 @@ export const Sidebar = ({
             onClick={onCreatePage}
           />
           <FileTree nodes={tree} activePage={activePage} onPageSelect={onPageSelect} />
+          <div className="h-60" />
         </div>
       </div>
     </div>

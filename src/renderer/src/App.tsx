@@ -48,12 +48,15 @@ function App(): React.JSX.Element {
       />
       <main className="flex-1 overflow-y-auto">
         {activePage && vaultPath ? (
-          <Editor
-            vaultPath={vaultPath}
-            pageName={activePage}
-            onRename={handleRename}
-            focusTitle={focusTitle}
-          />
+          <>
+            <Editor
+              vaultPath={vaultPath}
+              pageName={activePage}
+              onRename={handleRename}
+              focusTitle={focusTitle}
+            />
+            <div className="h-1/2" />
+          </>
         ) : (
           <div className="flex flex-col items-center justify-center h-full text-secondary text-sm">
             Select a page to start editing
