@@ -8,9 +8,11 @@ export interface IApi {
     write: (vaultPath: string, pageName: string, content: string) => Promise<void>;
     rename: (vaultPath: string, oldName: string, newName: string) => Promise<string>;
     create: (vaultPath: string, pageName: string) => Promise<string>;
+    delete: (vaultPath: string, pageName: string) => Promise<void>;
   };
   folder: {
     create: (vaultPath: string, folderName: string) => Promise<string>;
+    delete: (vaultPath: string, folderName: string) => Promise<void>;
   };
 }
 

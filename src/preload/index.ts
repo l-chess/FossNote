@@ -15,10 +15,14 @@ const api = {
       ipcRenderer.invoke("page:rename", vaultPath, oldName, newName),
     create: (vaultPath: string, pageName: string) =>
       ipcRenderer.invoke("page:create", vaultPath, pageName),
+    delete: (vaultPath: string, pageName: string) =>
+      ipcRenderer.invoke("page:delete", vaultPath, pageName),
   },
   folder: {
     create: (vaultPath: string, folderName: string) =>
       ipcRenderer.invoke("folder:create", vaultPath, folderName),
+    delete: (vaultPath: string, folderName: string) =>
+      ipcRenderer.invoke("folder:delete", vaultPath, folderName),
   },
 };
 

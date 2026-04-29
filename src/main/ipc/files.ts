@@ -1,4 +1,4 @@
-import { mkdir, readdir, readFile, rename, writeFile } from "node:fs/promises";
+import { mkdir, readdir, readFile, rename, rm, writeFile } from "node:fs/promises";
 import { join, relative } from "node:path";
 import { dialog, ipcMain } from "electron";
 
@@ -58,9 +58,19 @@ export function registerFileHandlers(): void {
     return pageName;
   });
 
+  ipcMain.handle("page:delete", async (_, vaultPath: string, pageName: string) => {
+    const filePath = join(vaultPath, `${pageName}.md`);
+    await rm(filePath);
+  });
+
   ipcMain.handle("folder:create", async (_, vaultPath: string, folderName: string) => {
     const folderPath = join(vaultPath, folderName);
     await mkdir(folderPath, { recursive: true });
     return folderName;
+  });
+
+  ipcMain.handle("folder:delete", async (_, vaultPath: string, folderName: string) => {
+    const folderPath = join(vaultPath, folderName);
+    await rm(folderPath, { recursive: true });
   });
 }

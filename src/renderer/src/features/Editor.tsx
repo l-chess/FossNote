@@ -1,4 +1,8 @@
+import BulletList from "@tiptap/extension-bullet-list";
+import ListItem from "@tiptap/extension-list-item";
 import Placeholder from "@tiptap/extension-placeholder";
+import TaskItem from "@tiptap/extension-task-item";
+import TaskList from "@tiptap/extension-task-list";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { useEffect, useRef } from "react";
@@ -18,8 +22,22 @@ export const Editor = ({ vaultPath, pageName, onRename, focusTitle = false }: Ed
 
   const editor = useEditor({
     extensions: [
-      StarterKit,
-      Markdown,
+      StarterKit.configure({
+        bulletList: false,
+        listItem: false,
+      }),
+      Markdown.configure({
+        html: false,
+        tightLists: true,
+        transformPastedText: true,
+        transformCopiedText: true,
+      }),
+      BulletList,
+      ListItem,
+      TaskList,
+      TaskItem.configure({
+        nested: true,
+      }),
       Placeholder.configure({
         placeholder: "Start writing…",
       }),

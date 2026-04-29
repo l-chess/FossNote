@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Editor } from "./features/Editor";
 import { Sidebar } from "./features/Sidebar";
+import { useVaultStore } from "./store/vault";
 
 function App(): React.JSX.Element {
-  const [vaultPath, setVaultPath] = useState<string | null>(null);
-  const [files, setFiles] = useState<string[]>([]);
-  const [activePage, setActivePage] = useState<string | null>(null);
+  const { vaultPath, activePage, files, setVaultPath, setFiles, setActivePage, renameFile } =
+    useVaultStore();
   const [focusTitle, setFocusTitle] = useState(false);
 
   const handleOpenVault = async () => {
@@ -17,12 +17,6 @@ function App(): React.JSX.Element {
     setActivePage(null);
   };
 
-  const handleRename = (oldName: string, newName: string) => {
-    setFiles((prev) => prev.map((f) => (f === oldName ? newName : f)));
-    setActivePage(newName);
-    setFocusTitle(false);
-  };
-
   const handleCreatePage = async () => {
     if (!vaultPath) return;
     await window.api.page.create(vaultPath, "Untitled");
@@ -31,6 +25,16 @@ function App(): React.JSX.Element {
     setActivePage("Untitled");
     setFocusTitle(true);
   };
+
+  const handleRename = (oldName: string, newName: string) => {
+    renameFile(oldName, newName);
+    setFocusTitle(false);
+  };
+
+  useEffect(() => {
+    if (!vaultPath) return;
+    window.api.vault.list(vaultPath).then(setFiles);
+  }, [setFiles, vaultPath]);
 
   return (
     <div className="flex h-screen w-screen bg-bg text-primary dark:bg-bg-dark dark:text-primary-dark overflow-hidden">
