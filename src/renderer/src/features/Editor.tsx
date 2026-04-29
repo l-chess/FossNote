@@ -116,7 +116,7 @@ export const Editor = ({ vaultPath, pageName, onRename, focusTitle = false }: Ed
   };
 
   return (
-    <div className="max-w-screen mx-auto px-12 py-16 h-full">
+    <div className="w-full px-12 py-16 transition-all duration-300 ease-in-out">
       <h1
         ref={titleRef}
         contentEditable

@@ -7,6 +7,7 @@ function App(): React.JSX.Element {
   const { vaultPath, activePage, files, setVaultPath, setFiles, setActivePage, renameFile } =
     useVaultStore();
   const [focusTitle, setFocusTitle] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   const handleOpenVault = async () => {
     const path = await window.api.vault.open();
@@ -42,11 +43,13 @@ function App(): React.JSX.Element {
         files={files}
         activePage={activePage}
         vaultName={vaultPath?.split("/").pop()}
+        collapsed={sidebarCollapsed}
+        onCollapse={setSidebarCollapsed}
         onPageSelect={setActivePage}
         onOpenVault={handleOpenVault}
         onCreatePage={handleCreatePage}
       />
-      <main className="flex-1 overflow-y-auto">
+      <main className="flex-1 min-w-0 overflow-y-auto transition-all duration-300 ease-in-out">
         {activePage && vaultPath ? (
           <>
             <Editor
