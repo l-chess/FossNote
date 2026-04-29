@@ -10,6 +10,7 @@ import { FileTree } from "./FileTree";
 export type SidebarProps = {
   files: string[];
   activePage: string | null;
+  vaultName?: string;
   onPageSelect: (page: string) => void;
   onOpenVault: () => void;
   onCreatePage: () => void;
@@ -18,6 +19,7 @@ export type SidebarProps = {
 export const Sidebar = ({
   files,
   activePage,
+  vaultName,
   onPageSelect,
   onOpenVault,
   onCreatePage,
@@ -51,7 +53,10 @@ export const Sidebar = ({
         className={`flex flex-col transition-all duration-300 ease-in-out border-r border-secondary overflow-y-scroll ${collapsed ? "w-0" : "w-full"}`}
       >
         <div className="flex flex-col px-2 gap-1 w-full">
-          <span className="font-semibold uppercase text-sm text-secondary mt-3">Pages</span>
+          {vaultName && (
+            <span className="py-2 text-center sticky top-0 bg-bg dark:bg-bg-dark">{vaultName}</span>
+          )}
+          <span className="font-semibold uppercase text-sm text-secondary">Pages</span>
           <Button
             label="New Page"
             icon={<FaPlus />}

@@ -41,6 +41,7 @@ function App(): React.JSX.Element {
       <Sidebar
         files={files}
         activePage={activePage}
+        vaultName={vaultPath?.split("/").pop()}
         onPageSelect={setActivePage}
         onOpenVault={handleOpenVault}
         onCreatePage={handleCreatePage}
