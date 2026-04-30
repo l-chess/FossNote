@@ -1,5 +1,6 @@
 import BulletList from "@tiptap/extension-bullet-list";
 import ListItem from "@tiptap/extension-list-item";
+import OrderedList from "@tiptap/extension-ordered-list";
 import Placeholder from "@tiptap/extension-placeholder";
 import TaskItem from "@tiptap/extension-task-item";
 import TaskList from "@tiptap/extension-task-list";
@@ -7,6 +8,7 @@ import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { useEffect, useRef } from "react";
 import { Markdown } from "tiptap-markdown";
+import { TaskListInputRule } from "../lib/taskListInputRule";
 
 export type EditorProps = {
   vaultPath: string;
@@ -25,18 +27,25 @@ export const Editor = ({ vaultPath, pageName, onRename, focusTitle = false }: Ed
       StarterKit.configure({
         bulletList: false,
         listItem: false,
+        orderedList: false,
       }),
       Markdown.configure({
         html: false,
         tightLists: true,
+        bulletListMarker: "-",
         transformPastedText: true,
         transformCopiedText: true,
       }),
       BulletList,
+      OrderedList,
       ListItem,
       TaskList,
+      TaskListInputRule,
       TaskItem.configure({
         nested: true,
+        HTMLAttributes: {
+          class: "task-item",
+        },
       }),
       Placeholder.configure({
         placeholder: "Start writing…",
@@ -65,7 +74,9 @@ export const Editor = ({ vaultPath, pageName, onRename, focusTitle = false }: Ed
   useEffect(() => {
     if (!editor) return;
     window.api.page.read(vaultPath, pageName).then((content) => {
-      editor.commands.setContent(content);
+      setTimeout(() => {
+        editor.commands.setContent(content);
+      }, 0);
     });
   }, [vaultPath, pageName, editor]);
 
