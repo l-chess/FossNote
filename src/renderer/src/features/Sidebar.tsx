@@ -56,12 +56,8 @@ export const Sidebar = ({
 
       {/* sliding panel */}
       <CollapsableSidebar collapsed={collapsed} borderRight={true}>
-        <div className="flex justify-between">
-          {vaultName && (
-            <span className="py-2 pl-1 text-center sticky truncate bg-bg dark:bg-bg-dark">
-              {vaultName}
-            </span>
-          )}
+        <div className="flex justify-between sticky items-center top-0 p-1 bg-bg dark:bg-bg-dark">
+          {vaultName && <span className="text-center sticky truncate">{vaultName}</span>}
           <div className="flex">
             <IconButton
               label={<AiOutlineFileAdd />}
