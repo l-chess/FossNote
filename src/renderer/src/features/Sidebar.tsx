@@ -1,4 +1,5 @@
 import { Button } from "@renderer/components/ui/Button";
+import { CollapsableSidebar } from "@renderer/components/ui/CollapsableSidebar";
 import { IconButton } from "@renderer/components/ui/IconButton";
 import { ThemeToggle } from "@renderer/components/ui/ThemeToggle";
 import { buildTree } from "@renderer/lib/fileTree";
@@ -52,24 +53,20 @@ export const Sidebar = ({
       </div>
 
       {/* sliding panel */}
-      <div
-        className={`flex flex-col transition-all duration-300 ease-in-out border-r border-secondary overflow-y-scroll overflow-x-hidden ${collapsed ? "w-0" : "w-64"}`}
-      >
-        <div className="flex flex-col px-2 gap-1 w-full">
-          {vaultName && (
-            <span className="py-2 text-center sticky top-0 bg-bg dark:bg-bg-dark">{vaultName}</span>
-          )}
-          <span className="font-semibold uppercase text-sm text-secondary">Pages</span>
-          <Button
-            label="New Page"
-            icon={<FaPlus />}
-            className="hover:bg-hover dark:hover:bg-hover-dark text-secondary gap-2"
-            onClick={onCreatePage}
-          />
-          <FileTree nodes={tree} activePage={activePage} onPageSelect={onPageSelect} />
-          <div className="h-60" />
-        </div>
-      </div>
+      <CollapsableSidebar collapsed={collapsed}>
+        {vaultName && (
+          <span className="py-2 text-center sticky top-0 bg-bg dark:bg-bg-dark">{vaultName}</span>
+        )}
+        <span className="font-semibold uppercase text-sm text-secondary">Pages</span>
+        <Button
+          label="New Page"
+          icon={<FaPlus />}
+          className="hover:bg-hover dark:hover:bg-hover-dark text-secondary gap-2"
+          onClick={onCreatePage}
+        />
+        <FileTree nodes={tree} activePage={activePage} onPageSelect={onPageSelect} />
+        <div className="h-60" />
+      </CollapsableSidebar>
     </div>
   );
 };
