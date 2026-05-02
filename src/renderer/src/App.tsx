@@ -27,6 +27,15 @@ function App(): React.JSX.Element {
     setFocusTitle(true);
   };
 
+  const handleCreateFolder = async () => {
+    if (!vaultPath) return;
+    await window.api.folder.create(vaultPath, "Untitled");
+    const pages = await window.api.vault.list(vaultPath);
+    setFiles(pages);
+    setActivePage("Untitled/Untitled");
+    setFocusTitle(true);
+  };
+
   const handleRename = (oldName: string, newName: string) => {
     renameFile(oldName, newName);
     setFocusTitle(false);
@@ -48,6 +57,7 @@ function App(): React.JSX.Element {
         onPageSelect={setActivePage}
         onOpenVault={handleOpenVault}
         onCreatePage={handleCreatePage}
+        onCreateFolder={handleCreateFolder}
       />
       <main className="flex-1 min-w-0 overflow-y-auto transition-all duration-300 ease-in-out">
         {activePage && vaultPath ? (

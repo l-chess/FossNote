@@ -9,6 +9,32 @@ export function buildTree(paths: string[]): FileTreeNode[] {
   const root: FileTreeNode[] = [];
 
   for (const path of paths) {
+    // Handle empty folder markers
+    if (path.endsWith("/")) {
+      const folderPath = path.slice(0, -1);
+      const parts = folderPath.split("/");
+      let currentLevel = root;
+
+      for (let i = 0; i < parts.length; i++) {
+        const part = parts[i];
+        const existingNode = currentLevel.find((n) => n.name === part);
+        if (existingNode) {
+          currentLevel = existingNode.children;
+        } else {
+          const newNode: FileTreeNode = {
+            name: part,
+            path: parts.slice(0, i + 1).join("/"),
+            children: [],
+            isFile: false,
+          };
+          currentLevel.push(newNode);
+          currentLevel = newNode.children;
+        }
+      }
+      continue;
+    }
+
+    // Normal file handling
     const parts = path.split("/");
     let currentLevel = root;
 
@@ -31,5 +57,6 @@ export function buildTree(paths: string[]): FileTreeNode[] {
       }
     }
   }
+
   return root;
 }

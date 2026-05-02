@@ -1,9 +1,9 @@
-import { Button } from "@renderer/components/ui/Button";
 import { CollapsableSidebar } from "@renderer/components/ui/CollapsableSidebar";
 import { IconButton } from "@renderer/components/ui/IconButton";
 import { buildTree } from "@renderer/lib/fileTree";
 import { useMemo } from "react";
-import { FaFolderMinus, FaPlus } from "react-icons/fa6";
+import { AiOutlineFileAdd, AiOutlineFolderAdd } from "react-icons/ai";
+import { FaFolderMinus } from "react-icons/fa6";
 import { TbLayoutSidebarLeftCollapse, TbLayoutSidebarLeftExpandFilled } from "react-icons/tb";
 import { FileTree } from "./FileTree";
 import { ThemeToggle } from "./ThemeToggle";
@@ -17,6 +17,7 @@ export type SidebarProps = {
   onPageSelect: (page: string) => void;
   onOpenVault: () => void;
   onCreatePage: () => void;
+  onCreateFolder: () => void;
 };
 
 export const Sidebar = ({
@@ -28,6 +29,7 @@ export const Sidebar = ({
   onPageSelect,
   onOpenVault,
   onCreatePage,
+  onCreateFolder,
 }: SidebarProps) => {
   const tree = useMemo(() => buildTree(files), [files]);
 
@@ -54,16 +56,27 @@ export const Sidebar = ({
 
       {/* sliding panel */}
       <CollapsableSidebar collapsed={collapsed} borderRight={true}>
-        {vaultName && (
-          <span className="py-2 text-center sticky top-0 bg-bg dark:bg-bg-dark">{vaultName}</span>
-        )}
-        <span className="font-semibold uppercase text-sm text-secondary">Pages</span>
-        <Button
-          label="New Page"
-          icon={<FaPlus />}
-          className="hover:bg-hover dark:hover:bg-hover-dark text-secondary gap-2"
-          onClick={onCreatePage}
-        />
+        <div className="flex justify-between">
+          {vaultName && (
+            <span className="py-2 pl-1 text-center sticky truncate bg-bg dark:bg-bg-dark">
+              {vaultName}
+            </span>
+          )}
+          <div className="flex">
+            <IconButton
+              label={<AiOutlineFileAdd />}
+              ariaLabel="New Page"
+              className="text-secondary text-xl"
+              onClick={onCreatePage}
+            />
+            <IconButton
+              label={<AiOutlineFolderAdd />}
+              ariaLabel="New Folder"
+              className="text-secondary text-2xl"
+              onClick={onCreateFolder}
+            />
+          </div>
+        </div>
         <FileTree nodes={tree} activePage={activePage} onPageSelect={onPageSelect} />
         <div className="h-60" />
       </CollapsableSidebar>

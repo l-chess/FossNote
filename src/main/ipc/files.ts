@@ -66,6 +66,7 @@ export function registerFileHandlers(): void {
   ipcMain.handle("folder:create", async (_, vaultPath: string, folderName: string) => {
     const folderPath = join(vaultPath, folderName);
     await mkdir(folderPath, { recursive: true });
+    await writeFile(join(folderPath, "Untitled.md"), "", "utf-8");
     return folderName;
   });
 
