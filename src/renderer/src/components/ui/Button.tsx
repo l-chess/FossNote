@@ -14,7 +14,7 @@ export const Button = ({ label, icon, onClick, className, style }: ButtonProps) 
       type="button"
       onClick={onClick}
       style={style}
-      className={`cursor-pointer rounded-md p-1 flex items-center text-left gap-1 w-full min-w-0 overflow-hidden ${className}`}
+      className={`cursor-pointer rounded-md px-2 py-1 flex items-center text-left gap-1 w-full min-w-0 overflow-hidden ${className}`}
     >
       {icon && <span className="shrink-0">{icon}</span>}
       <span className="min-w-0 truncate">{label}</span>

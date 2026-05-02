@@ -1,5 +1,5 @@
-import { FileTreeItem } from "@renderer/components/ui/FileTreeItem";
 import type { FileTreeNode } from "@renderer/lib/fileTree";
+import { FileTreeItem } from "./FileTreeItem";
 
 export type FileTreeProps = {
   nodes: FileTreeNode[];

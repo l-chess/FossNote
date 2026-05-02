@@ -1,8 +1,8 @@
+import { Button } from "@renderer/components/ui/Button";
+import { FolderButton } from "@renderer/components/ui/FolderButton";
 import { FileTree } from "@renderer/features/FileTree";
 import type { FileTreeNode } from "@renderer/lib/fileTree";
 import { useState } from "react";
-import { Button } from "./Button";
-import { FolderButton } from "./FolderButton";
 
 export type FileTreeItemProps = {
   node: FileTreeNode;

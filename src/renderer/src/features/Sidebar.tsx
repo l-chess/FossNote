@@ -1,12 +1,12 @@
 import { Button } from "@renderer/components/ui/Button";
 import { CollapsableSidebar } from "@renderer/components/ui/CollapsableSidebar";
 import { IconButton } from "@renderer/components/ui/IconButton";
-import { ThemeToggle } from "@renderer/components/ui/ThemeToggle";
 import { buildTree } from "@renderer/lib/fileTree";
 import { useMemo } from "react";
 import { FaFolderMinus, FaPlus } from "react-icons/fa6";
 import { TbLayoutSidebarLeftCollapse, TbLayoutSidebarLeftExpandFilled } from "react-icons/tb";
 import { FileTree } from "./FileTree";
+import { ThemeToggle } from "./ThemeToggle";
 
 export type SidebarProps = {
   files: string[];
@@ -53,7 +53,7 @@ export const Sidebar = ({
       </div>
 
       {/* sliding panel */}
-      <CollapsableSidebar collapsed={collapsed}>
+      <CollapsableSidebar collapsed={collapsed} borderRight={true}>
         {vaultName && (
           <span className="py-2 text-center sticky top-0 bg-bg dark:bg-bg-dark">{vaultName}</span>
         )}
