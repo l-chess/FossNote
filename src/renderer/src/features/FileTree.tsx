@@ -5,10 +5,19 @@ export type FileTreeProps = {
   nodes: FileTreeNode[];
   activePage: string | null;
   onPageSelect: (path: string) => void;
+  onDeletePage: (pageName: string) => void;
+  onDeleteFolder: (folderName: string) => void;
   depth?: number;
 };
 
-export const FileTree = ({ nodes, activePage, onPageSelect, depth = 0 }: FileTreeProps) => {
+export const FileTree = ({
+  nodes,
+  activePage,
+  onPageSelect,
+  onDeletePage,
+  onDeleteFolder,
+  depth = 0,
+}: FileTreeProps) => {
   return (
     <div>
       {nodes.map((node) => (
@@ -17,6 +26,8 @@ export const FileTree = ({ nodes, activePage, onPageSelect, depth = 0 }: FileTre
           node={node}
           activePage={activePage}
           onPageSelect={onPageSelect}
+          onDeletePage={onDeletePage}
+          onDeleteFolder={onDeleteFolder}
           depth={depth}
         />
       ))}

@@ -7,9 +7,16 @@ export type FolderButtonProps = {
   depth: number;
   children: ReactNode;
   defaultOpen?: boolean;
+  onContextMenu?: (e: React.MouseEvent) => void;
 };
 
-export const FolderButton = ({ name, depth, children, defaultOpen = false }: FolderButtonProps) => {
+export const FolderButton = ({
+  name,
+  depth,
+  children,
+  defaultOpen = false,
+  onContextMenu,
+}: FolderButtonProps) => {
   const [open, setOpen] = useState(defaultOpen);
 
   return (
@@ -18,6 +25,7 @@ export const FolderButton = ({ name, depth, children, defaultOpen = false }: Fol
         label={name}
         icon={open ? <TbChevronDown /> : <TbChevronRight />}
         onClick={() => setOpen(!open)}
+        onContextMenu={onContextMenu}
         style={{ paddingLeft: `${depth * 12 + 8}px` }}
         className="hover:bg-hover dark:hover:bg-hover-dark"
       />

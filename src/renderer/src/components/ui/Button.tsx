@@ -4,15 +4,17 @@ export type ButtonProps = {
   label: string;
   icon?: ReactNode;
   onClick?: () => void;
+  onContextMenu?: (e: React.MouseEvent) => void;
   className?: string;
   style?: CSSProperties;
 };
 
-export const Button = ({ label, icon, onClick, className, style }: ButtonProps) => {
+export const Button = ({ label, icon, onClick, onContextMenu, className, style }: ButtonProps) => {
   return (
     <button
       type="button"
       onClick={onClick}
+      onContextMenu={onContextMenu}
       style={style}
       className={`cursor-pointer rounded-md px-2 py-1 flex items-center text-left gap-1 w-full min-w-0 overflow-hidden ${className}`}
     >
