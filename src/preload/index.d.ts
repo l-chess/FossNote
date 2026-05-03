@@ -13,6 +13,7 @@ export interface IApi {
   folder: {
     create: (vaultPath: string, folderName: string) => Promise<string>;
     delete: (vaultPath: string, folderName: string) => Promise<void>;
+    rename: (vaultPath: string, oldName: string, newName: string) => Promise<string>;
   };
 }
 

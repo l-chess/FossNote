@@ -20,6 +20,8 @@ export type SidebarProps = {
   onDeletePage: (pageName: string) => void;
   onCreateFolder: () => void;
   onDeleteFolder: (folderName: string) => void;
+  onRenamePage: (oldName: string, newName: string) => void;
+  onRenameFolder: (oldName: string, newName: string) => void;
 };
 
 export const Sidebar = ({
@@ -34,6 +36,8 @@ export const Sidebar = ({
   onDeletePage,
   onCreateFolder,
   onDeleteFolder,
+  onRenamePage,
+  onRenameFolder,
 }: SidebarProps) => {
   const tree = useMemo(() => buildTree(files), [files]);
 
@@ -83,6 +87,8 @@ export const Sidebar = ({
           onPageSelect={onPageSelect}
           onDeletePage={onDeletePage}
           onDeleteFolder={onDeleteFolder}
+          onRenamePage={onRenamePage}
+          onRenameFolder={onRenameFolder}
         />
         <div className="h-60" />
       </CollapsableSidebar>

@@ -23,6 +23,8 @@ const api = {
       ipcRenderer.invoke("folder:create", vaultPath, folderName),
     delete: (vaultPath: string, folderName: string) =>
       ipcRenderer.invoke("folder:delete", vaultPath, folderName),
+    rename: (vaultPath: string, oldName: string, newName: string) =>
+      ipcRenderer.invoke("folder:rename", vaultPath, oldName, newName),
   },
 };
 

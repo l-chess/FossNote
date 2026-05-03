@@ -27,6 +27,14 @@ function App(): React.JSX.Element {
     setFocusTitle(true);
   };
 
+  const handleRenamePage = async (oldName: string, newName: string) => {
+    if (!vaultPath) return;
+    await window.api.page.rename(vaultPath, oldName, newName);
+    const pages = await window.api.vault.list(vaultPath);
+    setFiles(pages);
+    renameFile(oldName, newName);
+  };
+
   const handleDeletePage = async (pageName: string) => {
     if (!vaultPath) return;
     await window.api.page.delete(vaultPath, pageName);
@@ -42,6 +50,16 @@ function App(): React.JSX.Element {
     setFiles(pages);
     setActivePage("Untitled/Untitled");
     setFocusTitle(true);
+  };
+
+  const handleRenameFolder = async (oldName: string, newName: string) => {
+    if (!vaultPath) return;
+    await window.api.folder.rename(vaultPath, oldName, newName);
+    const pages = await window.api.vault.list(vaultPath);
+    setFiles(pages);
+    if (activePage?.startsWith(`${oldName}/`)) {
+      setActivePage(activePage.replace(`${oldName}/`, `${newName}/`));
+    }
   };
 
   const handleDeleteFolder = async (folderName: string) => {
@@ -76,6 +94,8 @@ function App(): React.JSX.Element {
         onDeletePage={handleDeletePage}
         onCreateFolder={handleCreateFolder}
         onDeleteFolder={handleDeleteFolder}
+        onRenamePage={handleRenamePage}
+        onRenameFolder={handleRenameFolder}
       />
       <main className="flex-1 min-w-0 overflow-y-auto transition-all duration-300 ease-in-out">
         {activePage && vaultPath ? (

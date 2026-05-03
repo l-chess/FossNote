@@ -7,6 +7,8 @@ export type FileTreeProps = {
   onPageSelect: (path: string) => void;
   onDeletePage: (pageName: string) => void;
   onDeleteFolder: (folderName: string) => void;
+  onRenamePage: (oldName: string, newName: string) => void;
+  onRenameFolder: (oldName: string, newName: string) => void;
   depth?: number;
 };
 
@@ -16,6 +18,8 @@ export const FileTree = ({
   onPageSelect,
   onDeletePage,
   onDeleteFolder,
+  onRenamePage,
+  onRenameFolder,
   depth = 0,
 }: FileTreeProps) => {
   return (
@@ -28,6 +32,8 @@ export const FileTree = ({
           onPageSelect={onPageSelect}
           onDeletePage={onDeletePage}
           onDeleteFolder={onDeleteFolder}
+          onRenamePage={onRenamePage}
+          onRenameFolder={onRenameFolder}
           depth={depth}
         />
       ))}

@@ -74,4 +74,14 @@ export function registerFileHandlers(): void {
     const folderPath = join(vaultPath, folderName);
     await rm(folderPath, { recursive: true });
   });
+
+  ipcMain.handle(
+    "folder:rename",
+    async (_, vaultPath: string, oldName: string, newName: string) => {
+      const oldPath = join(vaultPath, oldName);
+      const newPath = join(vaultPath, newName);
+      await rename(oldPath, newPath);
+      return newName;
+    },
+  );
 }
