@@ -1,6 +1,6 @@
 import { type ReactNode, useState } from "react";
 import { TbChevronDown, TbChevronRight } from "react-icons/tb";
-import { Button } from "./Button";
+import { Button, type InputProps } from "./Button";
 
 export type FolderButtonProps = {
   name: string;
@@ -8,6 +8,8 @@ export type FolderButtonProps = {
   children: ReactNode;
   defaultOpen?: boolean;
   onContextMenu?: (e: React.MouseEvent) => void;
+  renaming?: boolean;
+  inputProps?: InputProps;
 };
 
 export const FolderButton = ({
@@ -16,6 +18,8 @@ export const FolderButton = ({
   children,
   defaultOpen = false,
   onContextMenu,
+  renaming = false,
+  inputProps,
 }: FolderButtonProps) => {
   const [open, setOpen] = useState(defaultOpen);
 
@@ -26,6 +30,8 @@ export const FolderButton = ({
         icon={open ? <TbChevronDown /> : <TbChevronRight />}
         onClick={() => setOpen(!open)}
         onContextMenu={onContextMenu}
+        renaming={renaming}
+        inputProps={inputProps}
         style={{ paddingLeft: `${depth * 12 + 8}px` }}
         className="hover:bg-hover dark:hover:bg-hover-dark"
       />

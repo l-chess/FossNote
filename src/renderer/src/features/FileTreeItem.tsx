@@ -41,7 +41,7 @@ export const FileTreeItem = ({
     }
   }, [renaming]);
 
-  const handleRenameConfirm = () => {
+  const handleRenameConfirm = (_e?: React.FocusEvent<HTMLInputElement>) => {
     const trimmed = renameValue.trim();
     if (!trimmed || trimmed === node.name) {
       setRenaming(false);
@@ -117,25 +117,21 @@ export const FileTreeItem = ({
   if (node.isFile) {
     return (
       <>
-        {renaming ? (
-          <input
-            ref={inputRef}
-            value={renameValue}
-            onChange={(e) => setRenameValue(e.target.value)}
-            onBlur={handleRenameConfirm}
-            onKeyDown={handleRenameKeyDown}
-            style={{ paddingLeft: `${depth * 12 + 8}px` }}
-            className="w-full text-sm py-1 pr-2 bg-bg dark:bg-bg-dark border border-secondary rounded-md outline-none"
-          />
-        ) : (
-          <Button
-            label={node.name}
-            onClick={() => onPageSelect(node.path)}
-            onContextMenu={handleContextMenu}
-            style={{ paddingLeft: `${depth * 12 + 8}px` }}
-            className={`text-left mt-1 ${isActive ? "bg-hover dark:bg-hover-dark hover:bg-xhover dark:hover:bg-xhover-dark" : "hover:bg-hover dark:hover:bg-hover-dark"}`}
-          />
-        )}
+        <Button
+          label={node.name}
+          onClick={() => onPageSelect(node.path)}
+          onContextMenu={handleContextMenu}
+          style={{ paddingLeft: `${depth * 12 + 8}px` }}
+          className={`text-left mt-1 ${isActive ? "bg-hover dark:bg-hover-dark hover:bg-xhover dark:hover:bg-xhover-dark" : "hover:bg-hover dark:hover:bg-hover-dark"}`}
+          renaming={renaming}
+          inputProps={{
+            ref: inputRef,
+            value: renameValue,
+            onChange: (e) => setRenameValue(e.target.value),
+            onBlur: handleRenameConfirm,
+            onKeyDown: handleRenameKeyDown,
+          }}
+        />
         {contextMenu}
       </>
     );
@@ -143,7 +139,19 @@ export const FileTreeItem = ({
 
   return (
     <>
-      <FolderButton name={node.name} depth={depth} onContextMenu={handleContextMenu}>
+      <FolderButton
+        name={node.name}
+        depth={depth}
+        onContextMenu={handleContextMenu}
+        renaming={renaming}
+        inputProps={{
+          ref: inputRef,
+          value: renameValue,
+          onChange: (e) => setRenameValue(e.target.value),
+          onBlur: handleRenameConfirm,
+          onKeyDown: handleRenameKeyDown,
+        }}
+      >
         <FileTree
           nodes={node.children}
           activePage={activePage}
