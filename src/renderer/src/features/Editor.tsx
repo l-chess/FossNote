@@ -1,8 +1,8 @@
+import { CustomTaskItem } from "@renderer/lib/customTaskItem";
 import BulletList from "@tiptap/extension-bullet-list";
 import ListItem from "@tiptap/extension-list-item";
 import OrderedList from "@tiptap/extension-ordered-list";
 import Placeholder from "@tiptap/extension-placeholder";
-import TaskItem from "@tiptap/extension-task-item";
 import TaskList from "@tiptap/extension-task-list";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
@@ -41,7 +41,7 @@ export const Editor = ({ vaultPath, pageName, onRename, focusTitle = false }: Ed
       ListItem,
       TaskList,
       TaskListInputRule,
-      TaskItem.configure({
+      CustomTaskItem.configure({
         nested: true,
         HTMLAttributes: {
           class: "task-item",
